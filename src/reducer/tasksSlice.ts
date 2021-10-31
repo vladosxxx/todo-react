@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState, AppThunk } from '../store/store'
 import { getTasks } from '../api/getTasks'
+import { addTask } from '../api/addTask'
 
 interface taskObj {
-  id: number
   task: string
   favorite: boolean
   done: boolean
@@ -28,6 +28,13 @@ export const getAllTaskAsync = createAsyncThunk('tasks/getTasks', async () => {
   return res
   // The value we return becomes the `fulfilled` action payload
 })
+export const addTaskAsync = createAsyncThunk(
+  'task/addTask',
+  async (task: taskObj) => {
+    const res = await addTask(task)
+    return res
+  }
+)
 
 export const tasksSlice = createSlice({
   name: 'tasks',
@@ -57,6 +64,16 @@ export const tasksSlice = createSlice({
       .addCase(getAllTaskAsync.fulfilled, (state, action) => {
         state.isLoading = false
         state.tasks = action.payload
+      })
+      .addCase(addTaskAsync.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(addTaskAsync.fulfilled, (state, action) => {
+        console.log(action.payload)
+        return {
+          isLoading: false,
+          tasks: [...state.tasks, action.payload],
+        }
       })
   },
   // The `extraReducers` field lets the slice handle actions defined elsewhere,

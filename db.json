@@ -1,5 +1,16 @@
 {
   "tasks": [
-    { "id": 0, "task": "json-server", "favorite": false, "done": false }
+    {
+      "id": 0,
+      "task": "json-server",
+      "favorite": false,
+      "done": false
+    },
+    {
+      "task": "sdfasdf",
+      "favorite": false,
+      "done": false,
+      "id": 1
+    }
   ]
 }

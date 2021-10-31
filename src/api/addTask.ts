@@ -15,14 +15,17 @@
 //     )
 // }
 interface TasksState {
-  id: number
   task: string
   favorite: boolean
   done: boolean
 }
-export function addTask(tasks: Array<TasksState>) {
+export function addTask(task: TasksState) {
+  console.log('task', task)
   return fetch('http://localhost:3004/tasks', {
     method: 'POST',
-    body: JSON.stringify(tasks),
-  })
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(task),
+  }).then((res) => res.json())
 }

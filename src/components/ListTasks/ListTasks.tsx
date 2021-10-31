@@ -10,14 +10,14 @@ const ListTasks = () => {
   //       .then((res) => res.json())
   //       .then((data) => console.log(data))
   //   }, [])
-  console.log(tasks)
+  // console.log(tasks)
   return (
     <div>
-      {/* {tasks.map((task) => (
+      {tasks.tasks.map((task) => (
         <div>
           <h3>{task.task}</h3>
         </div>
-      ))} */}
+      ))}
     </div>
   )
 }
