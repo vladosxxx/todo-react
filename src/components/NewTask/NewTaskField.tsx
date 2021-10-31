@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import { useAppDispatch } from '../../store/hooks'
-import { addTaskAsync } from '../../reducer/tasksSlice'
+import { addTaskAsync, delTaskAsync } from '../../reducer/tasksSlice'
 
 const NewTaskField: FC = () => {
   const dispatch = useAppDispatch()
@@ -28,6 +28,7 @@ const NewTaskField: FC = () => {
     //   done: boolean
     // }
     const newTask = {
+      id: 0,
       task: task.text,
       favorite: false,
       done: false,
@@ -36,10 +37,13 @@ const NewTaskField: FC = () => {
 
     dispatch(addTaskAsync(newTask))
   }
+  function delTask(id: number) {
+    dispatch(delTaskAsync(id))
+  }
   return (
     <div>
       <input type="text" onChange={ValidInput} />
-      <button onClick={addTask}>Add</button>
+      <button onClick={() => delTask(1)}>Add</button>
     </div>
   )
 }
