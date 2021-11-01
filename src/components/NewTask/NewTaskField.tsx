@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import { useAppDispatch } from '../../store/hooks'
-import { addTaskAsync, delTaskAsync } from '../../reducer/tasksSlice'
+import { addTaskAsync } from '../../reducer/tasksSlice'
 
 const NewTaskField: FC = () => {
   const dispatch = useAppDispatch()
@@ -36,9 +36,6 @@ const NewTaskField: FC = () => {
 
       dispatch(addTaskAsync(newTask))
     }
-  }
-  function delTask(id: number) {
-    dispatch(delTaskAsync(id))
   }
 
   return (

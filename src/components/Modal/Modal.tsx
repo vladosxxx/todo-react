@@ -3,7 +3,12 @@ import ReactDOM from 'react-dom'
 // import '../style/modal.css'
 
 const { createPortal } = ReactDOM
-const Modal = ({ children, onClose, open }) =>
+interface modalProp {
+  children: object
+  onClose: () => void
+  open: boolean
+}
+const Modal = ({ children, onClose, open }: modalProp) =>
   open
     ? createPortal(
         <div className="modal">

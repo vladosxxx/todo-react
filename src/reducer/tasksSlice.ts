@@ -1,16 +1,15 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState, AppThunk } from '../store/store'
 import { getTasks } from '../api/getTasks'
 import { addTask } from '../api/addTask'
 import { delTask } from '../api/delTask'
-import { getOneTask } from '../api/getOneTask'
 import { editTask } from '../api/editTask'
 
-interface taskObj {
-  id: number
-  task: string
-  favorite: boolean
-  done: boolean
+export interface taskObj {
+  id?: number | undefined
+  task?: string | undefined
+  favorite?: boolean | undefined
+  done?: boolean | undefined
 }
 export interface TasksState {
   tasks: Array<taskObj>
@@ -35,7 +34,7 @@ export const addTaskAsync = createAsyncThunk(
 )
 export const delTaskAsync = createAsyncThunk(
   'task/delTask',
-  async (id: number) => {
+  async (id: number | undefined) => {
     const res = await delTask(id)
     return res
   }

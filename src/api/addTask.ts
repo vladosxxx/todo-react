@@ -1,9 +1,6 @@
-interface TasksState {
-  task: string
-  favorite: boolean
-  done: boolean
-}
-export function addTask(task: TasksState) {
+import { taskObj } from '../reducer/tasksSlice'
+
+export function addTask(task: taskObj) {
   return fetch('http://localhost:3004/tasks', {
     method: 'POST',
     headers: {

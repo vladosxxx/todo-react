@@ -21,7 +21,7 @@
     {
       "id": 4,
       "task": "ghdfghdhf",
-      "favorite": false,
+      "favorite": true,
       "done": false
     },
     {
@@ -35,6 +35,12 @@
       "task": "vbsdfgsdfgsdfgsdfg",
       "favorite": false,
       "done": true
+    },
+    {
+      "id": 7,
+      "task": "",
+      "favorite": false,
+      "done": false
     }
   ]
 }

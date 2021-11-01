@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import {
   getAllTaskAsync,
@@ -6,6 +6,8 @@ import {
   getDoneTasks,
   getToDoTasks,
   getFavoriteTasks,
+  editTaskAsync,
+  taskObj,
 } from '../../reducer/tasksSlice'
 import Menu from '../Menu/Menu'
 import Modal from '../Modal/Modal'
@@ -54,7 +56,9 @@ const ListTasks = () => {
       ? dispatch(getAllTaskAsync()).then(() => dispatch(getFavoriteTasks()))
       : filterAll()
   }
-
+  const addToFavorite = (task: taskObj) => {
+    dispatch(editTaskAsync({ ...task, favorite: !task.favorite }))
+  }
   const filterCheck = () => {
     if (isFilter.done) {
       filterDone(isFilter.done)
@@ -66,7 +70,7 @@ const ListTasks = () => {
       filterAll()
     }
   }
-  function clickMenu(id: number) {
+  function clickMenu(id: number | undefined) {
     setOpen(true)
     setIdMenu(id)
   }
@@ -86,7 +90,9 @@ const ListTasks = () => {
           <div key={task.id}>
             <h3>{task.task}</h3>
             <button onClick={() => clickMenu(task.id)}>Menu</button>
-            <p>{task.favorite ? 'в избранном' : 'НЕ в избранном'}</p>
+            <button onClick={() => addToFavorite(task)}>
+              {task.favorite ? 'в избранном' : 'НЕ в избранном'}
+            </button>
           </div>
         ))}
       </div>

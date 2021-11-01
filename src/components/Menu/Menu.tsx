@@ -1,12 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { editTaskAsync } from '../../reducer/tasksSlice'
 import Modal from '../Modal/Modal'
 import DelTask from '../DelTask/DelTask'
+interface MenuInterFace {
+  id?: number
+  delAndClose: (value: boolean) => void
+  filterCheck: () => void
+}
 
-const Menu = ({ id, delAndClose, filterCheck }) => {
-  const [newTask, setNewTask] = useState(null)
-  const [open, setOpen] = useState(false)
+const Menu = ({ id, delAndClose, filterCheck }: MenuInterFace) => {
+  interface NewTask {
+    text: string | undefined
+    errorField: boolean | undefined
+    maxLength: number | undefined
+  }
+  const [newTask, setNewTask] = useState<NewTask | null>(null)
+  const [open, setOpen] = useState<boolean>(false)
   const task = useAppSelector((state) =>
     state.tasks.tasks.find((item) => item.id === id)
   )
@@ -20,27 +30,27 @@ const Menu = ({ id, delAndClose, filterCheck }) => {
       maxLength: value.length,
     })
   }
+
   const addToFavorite = () => {
-    dispatch(editTaskAsync({ ...task, favorite: !task.favorite })).then(() =>
+    dispatch(editTaskAsync({ ...task, favorite: !task!.favorite })).then(() =>
       filterCheck()
     )
   }
   const addToDone = () => {
-    dispatch(editTaskAsync({ ...task, done: !task.done })).then(() =>
+    dispatch(editTaskAsync({ ...task, done: !task!.done })).then(() =>
       filterCheck()
     )
   }
   const editTask = () => {
     setNewTask({
-      text: task.task,
+      text: task!.task,
       errorField: false,
-      maxLength: task.task.length,
+      maxLength: task!.task!.length,
     })
   }
   const delTask = () => {
     setOpen(true)
   }
-  //   console.log(task)
   if (task) {
     return (
       <>

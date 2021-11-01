@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { useAppSelector, useAppDispatch } from '../../store/hooks'
+import React from 'react'
+import { useAppDispatch } from '../../store/hooks'
 import { delTaskAsync } from '../../reducer/tasksSlice'
-import Menu from '../Menu/Menu'
-import Modal from '../Modal/Modal'
 
-const DelTask = ({ id, task }) => {
+interface propsDel {
+  id?: number
+  task?: string | undefined
+}
+const DelTask = ({ id, task }: propsDel) => {
   const dispatch = useAppDispatch()
 
   const delTask = () => {
