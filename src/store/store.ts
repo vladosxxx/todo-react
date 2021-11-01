@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 import tasksReducer from '../reducer/tasksSlice'
+// import oneRaskReducer from '../reducer/oneTaskSlice'
 
 export const store = configureStore({
   reducer: {
     tasks: tasksReducer,
+    // oneTask: oneRaskReducer,
   },
 })
 
