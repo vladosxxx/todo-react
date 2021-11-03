@@ -1,33 +1,9 @@
 {
   "tasks": [
     {
-      "id": 0,
-      "task": "json-server",
-      "favorite": false,
-      "done": true
-    },
-    {
-      "id": 2,
-      "task": "asdfasdf",
-      "favorite": false,
-      "done": false
-    },
-    {
-      "id": 3,
-      "task": "asdfasdfdfsg",
-      "favorite": true,
-      "done": true
-    },
-    {
-      "id": 4,
-      "task": "ghdfghdhf",
-      "favorite": true,
-      "done": false
-    },
-    {
       "id": 5,
       "task": "vbsdfgsdfg",
-      "favorite": false,
+      "favorite": true,
       "done": true
     },
     {

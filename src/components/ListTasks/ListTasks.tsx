@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import {
   getAllTaskAsync,
@@ -11,18 +11,22 @@ import {
 } from '../../reducer/tasksSlice'
 import Menu from '../Menu/Menu'
 import Modal from '../Modal/Modal'
+import DelTask from '../DelTask/DelTask'
 
 const ListTasks = () => {
   let tasks = useAppSelector(selectTasks)
   const dispatch = useAppDispatch()
 
   const [open, setOpen] = useState<boolean>(false)
+  const [delOpen, setDelOpen] = useState<boolean>(false)
+
   const [idMenu, setIdMenu] = useState<number>()
   const [isFilter, setFilter] = useState({
     done: false,
     toDo: false,
     favorite: false,
   })
+
   function filterAll() {
     dispatch(getAllTaskAsync())
   }
@@ -70,6 +74,9 @@ const ListTasks = () => {
       filterAll()
     }
   }
+  const menuClose = () => {
+    setOpen(false)
+  }
   function clickMenu(id: number | undefined) {
     setOpen(true)
     setIdMenu(id)
@@ -97,7 +104,15 @@ const ListTasks = () => {
         ))}
       </div>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <Menu id={idMenu} delAndClose={setOpen} filterCheck={filterCheck} />
+        <Menu
+          id={idMenu}
+          filterCheck={filterCheck}
+          delOpen={setDelOpen}
+          delAndClose={menuClose}
+        />
+      </Modal>
+      <Modal open={delOpen} onClose={() => setDelOpen(false)}>
+        <DelTask id={idMenu} delAndClose={() => setDelOpen(false)} />
       </Modal>
     </>
   )

@@ -1,15 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { editTaskAsync } from '../../reducer/tasksSlice'
-import Modal from '../Modal/Modal'
-import DelTask from '../DelTask/DelTask'
 interface MenuInterFace {
   id?: number
-  delAndClose: (value: boolean) => void
+  delOpen: (value: boolean) => void
+  delAndClose: () => void
   filterCheck: () => void
 }
 
-const Menu = ({ id, delAndClose, filterCheck }: MenuInterFace) => {
+const Menu = ({ id, filterCheck, delOpen, delAndClose }: MenuInterFace) => {
   interface NewTask {
     text: string | undefined
     errorField: boolean | undefined
@@ -17,7 +16,7 @@ const Menu = ({ id, delAndClose, filterCheck }: MenuInterFace) => {
   }
   const [newTask, setNewTask] = useState<NewTask | null>(null)
   const [open, setOpen] = useState<boolean>(false)
-  const task = useAppSelector((state) =>
+  const task: any | undefined = useAppSelector((state) =>
     state.tasks.tasks.find((item) => item.id === id)
   )
   const dispatch = useAppDispatch()
@@ -51,6 +50,10 @@ const Menu = ({ id, delAndClose, filterCheck }: MenuInterFace) => {
   const delTask = () => {
     setOpen(true)
   }
+  const closeMenu = () => {
+    delAndClose()
+    delOpen(true)
+  }
   if (task) {
     return (
       <>
@@ -71,15 +74,12 @@ const Menu = ({ id, delAndClose, filterCheck }: MenuInterFace) => {
             {task.done ? 'Вернуть в работу' : 'Выполненно'}
           </button>
           <button onClick={editTask}>Редактировать</button>
-          <button onClick={delTask}>Удалить</button>
+          <button onClick={closeMenu}>Удалить</button>
         </div>
-        <Modal open={open} onClose={() => setOpen(false)}>
-          <DelTask id={task.id} task={task.task} />
-        </Modal>
       </>
     )
   } else {
-    delAndClose(false)
+    delAndClose()
     return (
       <>
         <p>deleting...</p>
