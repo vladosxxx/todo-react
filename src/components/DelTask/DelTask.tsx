@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react'
-import { useAppDispatch } from '../../store/hooks'
+import React from 'react'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { delTaskAsync } from '../../reducer/tasksSlice'
+import '../style/button.css'
+import './style.css'
 
 interface propsDel {
   id?: number
   delAndClose: () => void
-  task?: string | undefined
 }
-const DelTask = ({ id, task, delAndClose }: propsDel) => {
+const DelTask = ({ id, delAndClose }: propsDel) => {
+  const task: any | undefined = useAppSelector((state) =>
+    state.tasks.tasks.find((item) => item.id === id)
+  )
   const dispatch = useAppDispatch()
 
   const delTask = () => {
@@ -15,12 +19,20 @@ const DelTask = ({ id, task, delAndClose }: propsDel) => {
     delAndClose()
   }
   return (
-    <>
-      <h3>Вы действительно хотите удалить задачу?</h3>
-      <h4>{task}</h4>
-      <button onClick={delTask}>Да, удалить</button>
-      <button onClick={delAndClose}>Отмена</button>
-    </>
+    <div className="del-window">
+      <div>
+        <h4>Вы действительно хотите удалить задачу?</h4>
+        <h2>{task.task}</h2>
+      </div>
+      <div>
+        <button className="button button_primary" onClick={delAndClose}>
+          Отмена
+        </button>
+        <button className="button button_secondary" onClick={delTask}>
+          Да, удалить
+        </button>
+      </div>
+    </div>
   )
 }
 export default DelTask

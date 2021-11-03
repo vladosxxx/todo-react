@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
-import { idText } from 'typescript'
-// import '../style/modal.css'
+import './style.css'
 
 const { createPortal } = ReactDOM
 interface modalProp {
@@ -19,13 +18,15 @@ const Modal = ({ children, onClose, open }: modalProp) => {
       document.addEventListener('mousedown', handler)
       return () => document.addEventListener('mousedown', handler)
     })
+    // eslint-disable-next-line
   }, [modalRef])
   return open
     ? createPortal(
-        <div className="modal" ref={modalRef}>
-          <button onClick={onClose} className="modal__close">
-            &times;
-          </button>
+        <div className="cd-popup-container" ref={modalRef}>
+          <button
+            onClick={onClose}
+            className="button-close cd-popup-close img-replace"
+          ></button>
           {children}
         </div>,
         document.body

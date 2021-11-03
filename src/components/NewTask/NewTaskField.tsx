@@ -1,6 +1,8 @@
 import React, { FC, useState } from 'react'
 import { useAppDispatch } from '../../store/hooks'
 import { addTaskAsync } from '../../reducer/tasksSlice'
+import './style.css'
+import '../style/button.css'
 
 const NewTaskField: FC = () => {
   const dispatch = useAppDispatch()
@@ -39,16 +41,31 @@ const NewTaskField: FC = () => {
   }
 
   return (
-    <div>
-      <div>
-        <input type="text" onChange={ValidInput} />
-        <button onClick={addTask}>Add</button>
+    <div className="input-main">
+      <div className="input-flex">
+        <div className="form__group field">
+          <input
+            type="text"
+            className="form__field"
+            placeholder="Name"
+            name="name"
+            id="name"
+            required
+            onChange={ValidInput}
+          />
+          <label htmlFor="name" className="form__label">
+            ToDo
+          </label>
+        </div>
         {task.errorField && (
           <span className="error-message">
             Превышен лимит текста задачи на {task.maxLength - 160} символов
           </span>
         )}
       </div>
+      <button className="button button_primary" onClick={addTask}>
+        Add
+      </button>
     </div>
   )
 }

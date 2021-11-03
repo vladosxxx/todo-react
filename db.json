@@ -1,20 +1,8 @@
 {
   "tasks": [
     {
-      "id": 5,
-      "task": "vbsdfgsdfg",
-      "favorite": true,
-      "done": true
-    },
-    {
-      "id": 6,
-      "task": "vbsdfgsdfgsdfgsdfg",
-      "favorite": false,
-      "done": true
-    },
-    {
-      "id": 7,
-      "task": "",
+      "id": 8,
+      "task": "buy milk",
       "favorite": false,
       "done": false
     }

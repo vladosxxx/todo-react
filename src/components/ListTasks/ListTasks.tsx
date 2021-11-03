@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import {
   getAllTaskAsync,
@@ -12,6 +12,11 @@ import {
 import Menu from '../Menu/Menu'
 import Modal from '../Modal/Modal'
 import DelTask from '../DelTask/DelTask'
+import '../style/button.css'
+import './style.css'
+import MenuImg from './image/menu.png'
+import StarActive from './image/star-active.png'
+import Star from './image/star.png'
 
 const ListTasks = () => {
   let tasks = useAppSelector(selectTasks)
@@ -83,37 +88,60 @@ const ListTasks = () => {
   }
   return (
     <>
-      <button onClick={() => filterDone(!isFilter.done)}>
+      <button
+        className={isFilter.done ? 'button button_primary' : 'button'}
+        onClick={() => filterDone(!isFilter.done)}
+      >
         Выполненные задачи
       </button>
-      <button onClick={() => filterToDo(!isFilter.toDo)}>
+      <button
+        className={isFilter.toDo ? 'button button_primary' : 'button'}
+        onClick={() => filterToDo(!isFilter.toDo)}
+      >
         Задачи в работе
       </button>
-      <button onClick={() => filterFavorite(!isFilter.favorite)}>
+      <button
+        className={isFilter.favorite ? 'button button_primary' : 'button'}
+        onClick={() => filterFavorite(!isFilter.favorite)}
+      >
         Избранные задачи
       </button>
-      <div>
-        {tasks.tasks.map((task) => (
-          <div key={task.id}>
-            <h3>{task.task}</h3>
-            <button onClick={() => clickMenu(task.id)}>Menu</button>
-            <button onClick={() => addToFavorite(task)}>
-              {task.favorite ? 'в избранном' : 'НЕ в избранном'}
-            </button>
-          </div>
-        ))}
+      <div className="wrapper">
+        <ul id="ul">
+          {tasks.tasks.map((task) => (
+            <li key={task.id}>
+              <h2 className="task">{task.task}</h2>
+              <div>
+                <button
+                  className="button-icons"
+                  onClick={() => clickMenu(task.id)}
+                >
+                  <img src={MenuImg} alt="menu" />
+                </button>
+                <button
+                  className="button-icons"
+                  onClick={() => addToFavorite(task)}
+                >
+                  <img src={task.favorite ? StarActive : Star} alt="favorite" />
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <Menu
-          id={idMenu}
-          filterCheck={filterCheck}
-          delOpen={setDelOpen}
-          delAndClose={menuClose}
-        />
-      </Modal>
-      <Modal open={delOpen} onClose={() => setDelOpen(false)}>
-        <DelTask id={idMenu} delAndClose={() => setDelOpen(false)} />
-      </Modal>
+      <div className={open && delOpen ? 'cd-popup' : ''}>
+        <Modal open={open} onClose={() => setOpen(false)}>
+          <Menu
+            id={idMenu}
+            filterCheck={filterCheck}
+            delOpen={setDelOpen}
+            delAndClose={menuClose}
+          />
+        </Modal>
+        <Modal open={delOpen} onClose={() => setDelOpen(false)}>
+          <DelTask id={idMenu} delAndClose={() => setDelOpen(false)} />
+        </Modal>
+      </div>
     </>
   )
 }

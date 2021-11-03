@@ -1,0 +1,13 @@
+.buttons-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.menu-window {
+  margin-top: 4rem;
+}
+.task {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,6 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useAppSelector, useAppDispatch } from '../../store/hooks'
 import { editTaskAsync } from '../../reducer/tasksSlice'
+import '../style/button.css'
+import './style.css'
 interface MenuInterFace {
   id?: number
   delOpen: (value: boolean) => void
@@ -15,7 +17,7 @@ const Menu = ({ id, filterCheck, delOpen, delAndClose }: MenuInterFace) => {
     maxLength: number | undefined
   }
   const [newTask, setNewTask] = useState<NewTask | null>(null)
-  const [open, setOpen] = useState<boolean>(false)
+
   const task: any | undefined = useAppSelector((state) =>
     state.tasks.tasks.find((item) => item.id === id)
   )
@@ -47,8 +49,16 @@ const Menu = ({ id, filterCheck, delOpen, delAndClose }: MenuInterFace) => {
       maxLength: task!.task!.length,
     })
   }
-  const delTask = () => {
-    setOpen(true)
+  const putEditTask = (event: any) => {
+    if (
+      event.key === 'Enter' &&
+      newTask !== null &&
+      newTask.errorField === false
+    ) {
+      dispatch(editTaskAsync({ ...task, task: newTask.text }))
+        .then(() => filterCheck())
+        .then(() => setNewTask(null))
+    }
   }
   const closeMenu = () => {
     delAndClose()
@@ -56,27 +66,42 @@ const Menu = ({ id, filterCheck, delOpen, delAndClose }: MenuInterFace) => {
   }
   if (task) {
     return (
-      <>
-        <div>
-          {newTask === null ? (
-            <h4>{task.task}</h4>
-          ) : (
-            <input type="text" onChange={ValidInput} value={newTask.text} />
-          )}
-
-          {task.favorite ? <p>В избраном</p> : <p>Не в избранном</p>}
-          {task.done ? <p>Готово</p> : <p>Не Готово</p>}
-
-          <button onClick={addToFavorite}>
+      <div className="menu-window">
+        {newTask === null ? (
+          <h2 className="task">{task.task}</h2>
+        ) : (
+          <>
+            <input
+              autoFocus
+              type="text"
+              className="form__field"
+              onKeyDown={putEditTask}
+              onChange={ValidInput}
+              value={newTask.text}
+            />
+            {newTask.errorField && newTask.maxLength !== undefined && (
+              <span className="error-message">
+                Превышен лимит текста задачи на {newTask.maxLength - 160}
+                символов
+              </span>
+            )}
+          </>
+        )}
+        <div className="buttons-menu">
+          <button className="button button_primary" onClick={addToFavorite}>
             {task.favorite ? 'Убрать из избранного' : 'В избранное'}
           </button>
-          <button onClick={addToDone}>
+          <button className="button button_primary" onClick={addToDone}>
             {task.done ? 'Вернуть в работу' : 'Выполненно'}
           </button>
-          <button onClick={editTask}>Редактировать</button>
-          <button onClick={closeMenu}>Удалить</button>
+          <button className="button button_primary" onClick={editTask}>
+            Редактировать
+          </button>
+          <button className="button button_secondary" onClick={closeMenu}>
+            Удалить
+          </button>
         </div>
-      </>
+      </div>
     )
   } else {
     delAndClose()
