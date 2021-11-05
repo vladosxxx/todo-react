@@ -12,7 +12,10 @@
     "@types/react": "^16.14.20",
     "@types/react-dom": "^16.9.14",
     "@types/react-redux": "^7.1.20",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
     "concurrently": "^6.3.0",
+    "enzyme": "^3.11.0",
+    "enzyme-to-json": "^3.6.2",
     "json-server": "^0.17.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -40,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/enzyme": "^3.10.10"
   }
 }

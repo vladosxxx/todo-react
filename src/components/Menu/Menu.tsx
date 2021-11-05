@@ -61,7 +61,7 @@ const Menu = ({ id, filterCheck, delOpen, delAndClose }: MenuInterFace) => {
     }
   }
   const closeMenu = () => {
-    delAndClose()
+    delAndClose
     delOpen(true)
   }
   if (task) {
@@ -88,10 +88,14 @@ const Menu = ({ id, filterCheck, delOpen, delAndClose }: MenuInterFace) => {
           </>
         )}
         <div className="buttons-menu">
-          <button className="button button_primary" onClick={addToFavorite}>
+          <button
+            className="button button_primary"
+            id="favorite-button"
+            onClick={addToFavorite}
+          >
             {task.favorite ? 'Убрать из избранного' : 'В избранное'}
           </button>
-          <button className="button button_primary" onClick={addToDone}>
+          <button className="button button_primary done" onClick={addToDone}>
             {task.done ? 'Вернуть в работу' : 'Выполненно'}
           </button>
           <button className="button button_primary" onClick={editTask}>
@@ -104,7 +108,7 @@ const Menu = ({ id, filterCheck, delOpen, delAndClose }: MenuInterFace) => {
       </div>
     )
   } else {
-    delAndClose()
+    delAndClose
     return (
       <>
         <p>deleting...</p>
